@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Replicate Usage &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Billing and Usage Limits" href="billing_usage_limits.html" />
+    <link rel="prev" title="Image Generation" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="billing_usage_limits.html" title="Billing and Usage Limits"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Image Generation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Image Generation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Replicate Usage</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="replicate-usage">
+<h1>Replicate Usage<a class="headerlink" href="#replicate-usage" title="Link to this heading">¶</a></h1>
+<p>Replicate is a core component in WeAudit for generating AI-driven images. It provides access to various pre-trained models and facilitates the creation of images based on textual prompts.</p>
+<section id="how-we-use-replicate">
+<h2>How We Use Replicate<a class="headerlink" href="#how-we-use-replicate" title="Link to this heading">¶</a></h2>
+<p>WeAudit integrates Replicate to:</p>
+<ol class="arabic simple">
+<li><p><strong>Generate Images</strong>: Leverage state-of-the-art models for generating images directly from textual descriptions.</p></li>
+<li><p><strong>Custom Model Deployment</strong>: Deploy and manage custom models specific to WeAudit’s needs, enhancing the platform’s capability to audit AI behaviors.</p></li>
+</ol>
+</section>
+<section id="setting-up-replicate">
+<h2>Setting Up Replicate<a class="headerlink" href="#setting-up-replicate" title="Link to this heading">¶</a></h2>
+<p>To utilize Replicate within WeAudit:</p>
+<ol class="arabic simple">
+<li><p><strong>API Key Configuration</strong>:
+- Obtain an API key from Replicate.
+- Securely store and use the key in your application to authenticate API requests.</p></li>
+<li><p><strong>Making API Calls</strong>:
+- Use the Replicate API to send image generation requests.
+- Handle the JSON responses that include URLs to the generated images.</p></li>
+</ol>
+</section>
+<section id="example-api-call">
+<h2>Example API Call<a class="headerlink" href="#example-api-call" title="Link to this heading">¶</a></h2>
+<p>Below is an example of using the Replicate API to generate an image:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">def</span> <span class="nf">generate_image</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.replicate.com/v1/predictions&quot;</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Token YOUR_REPLICATE_API_KEY&#39;</span><span class="p">}</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;certain-model-version&#39;</span><span class="p">,</span> <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;prompt&#39;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}}</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This function sends a request to generate an image based on a prompt, returning the JSON response from Replicate.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Replicate Usage</a><ul>
+<li><a class="reference internal" href="#how-we-use-replicate">How We Use Replicate</a></li>
+<li><a class="reference internal" href="#setting-up-replicate">Setting Up Replicate</a></li>
+<li><a class="reference internal" href="#example-api-call">Example API Call</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Image Generation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="billing_usage_limits.html"
+                          title="next chapter">Billing and Usage Limits</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/image_generation/replicate_usage.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="billing_usage_limits.html" title="Billing and Usage Limits"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Image Generation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Image Generation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Replicate Usage</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>

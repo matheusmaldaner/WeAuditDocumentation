@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>AWS S3 Buckets &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS S3 Buckets</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="aws-s3-buckets">
+<h1>AWS S3 Buckets<a class="headerlink" href="#aws-s3-buckets" title="Link to this heading">¶</a></h1>
+<p>Amazon S3 (Simple Storage Service) provides scalable object storage for data backup, collection, and analytics. An ideal place for WeAudit to store generated images and other large data securely.</p>
+<section id="features-and-benefits">
+<h2>Features and Benefits<a class="headerlink" href="#features-and-benefits" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Scalability</strong>: Automatically scales to accommodate data growth.</p></li>
+<li><p><strong>Durability and Availability</strong>: Offers industry-leading durability and availability.</p></li>
+<li><p><strong>Security</strong>: Provides robust controls to ensure data is secure from unauthorized access.</p></li>
+<li><p><strong>Cost-Effective</strong>: Storage pricing is based on usage, which means you pay only for what you use.</p></li>
+</ul>
+</section>
+<section id="usage-in-weaudit">
+<h2>Usage in WeAudit<a class="headerlink" href="#usage-in-weaudit" title="Link to this heading">¶</a></h2>
+<p>WeAudit uses Amazon S3 to:</p>
+<ol class="arabic simple">
+<li><p><strong>Store Generated Images</strong>: All images created by the Replicate API are stored securely in S3 buckets.</p></li>
+<li><p><strong>Backup and Archiving</strong>: Keeps backups of important data, ensuring data durability and recoverability.</p></li>
+<li><p><strong>Serve Static Files</strong>: Hosts static files that are part of the WeAudit web application.</p></li>
+</ol>
+</section>
+<section id="setting-up-s3-buckets">
+<h2>Setting Up S3 Buckets<a class="headerlink" href="#setting-up-s3-buckets" title="Link to this heading">¶</a></h2>
+<p>To create and configure an S3 bucket for WeAudit, follow these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Create the Bucket</strong>:
+- Navigate to the S3 section in the AWS Management Console.
+- Click on ‘Create Bucket’, provide a name, and select the region.</p></li>
+<li><p><strong>Configure Permissions</strong>:
+- Apply bucket policies to manage access permissions.
+- Ensure that public access is blocked unless necessary.</p></li>
+<li><p><strong>Enable Versioning</strong>:
+- Turn on versioning to keep an immutable version of objects to protect against unintended deletes or overwrites.</p></li>
+<li><p><strong>Set Lifecycle Policies</strong>:
+- Define lifecycle rules to manage objects’ lifespans, such as automatically archiving or deleting old data.</p></li>
+</ol>
+</section>
+<section id="example-configuration">
+<h2>Example Configuration<a class="headerlink" href="#example-configuration" title="Link to this heading">¶</a></h2>
+<p>Below is an example of a bucket policy that grants read access to authenticated users:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AddPerm&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Principal&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::examplebucket/*&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;StringEquals&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;aws:PrincipalOrgID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;o-xxxxxxxxxxx&quot;</span><span class="p">]}}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="monitoring-and-management">
+<h2>Monitoring and Management<a class="headerlink" href="#monitoring-and-management" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>AWS CloudWatch</strong>: Monitor bucket access and usage patterns.</p></li>
+<li><p><strong>AWS CloudTrail</strong>: Track user activity and API usage for auditing.</p></li>
+<li><p><strong>S3 Analytics</strong>: Analyze and optimize storage costs and performance.</p></li>
+</ul>
+</section>
+<section id="security-considerations">
+<h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Encrypt Data at Rest</strong>: Use S3 managed keys (SSE-S3) or AWS KMS keys (SSE-KMS) for encryption.</p></li>
+<li><p><strong>Secure Data in Transit</strong>: Ensure data is transferred over SSL by enabling HTTPS access only on your bucket.</p></li>
+</ul>
+<p>S3 buckets are integral to the storage strategy of WeAudit, providing a reliable and secure way to manage the application’s data needs.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">AWS S3 Buckets</a><ul>
+<li><a class="reference internal" href="#features-and-benefits">Features and Benefits</a></li>
+<li><a class="reference internal" href="#usage-in-weaudit">Usage in WeAudit</a></li>
+<li><a class="reference internal" href="#setting-up-s3-buckets">Setting Up S3 Buckets</a></li>
+<li><a class="reference internal" href="#example-configuration">Example Configuration</a></li>
+<li><a class="reference internal" href="#monitoring-and-management">Monitoring and Management</a></li>
+<li><a class="reference internal" href="#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/deployment/aws_s3_buckets.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS S3 Buckets</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>

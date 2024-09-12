@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Amazon Lightsail &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Amazon Lightsail</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="amazon-lightsail">
+<h1>Amazon Lightsail<a class="headerlink" href="#amazon-lightsail" title="Link to this heading">¶</a></h1>
+<p>Amazon Lightsail is a simplified cloud computing solution, offering an easy-to-use platform for deploying and managing virtual private servers. It provides a cost-effective way to launch and manage applications with predictable pricing.</p>
+<section id="features-and-benefits">
+<h2>Features and Benefits<a class="headerlink" href="#features-and-benefits" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Simplicity</strong>: Provides an intuitive interface for managing virtual private servers, databases, and storage.</p></li>
+<li><p><strong>Cost-Effectiveness</strong>: Offers a straightforward, low monthly price that includes a server, SSD-based storage, data transfer, DNS management, and a static IP.</p></li>
+<li><p><strong>Scalable</strong>: While initially designed for simpler projects, Lightsail can scale to use more sophisticated AWS services as needs grow.</p></li>
+</ul>
+</section>
+<section id="usage-in-weaudit">
+<h2>Usage in WeAudit<a class="headerlink" href="#usage-in-weaudit" title="Link to this heading">¶</a></h2>
+<p>WeAudit uses Amazon Lightsail to:</p>
+<ol class="arabic simple">
+<li><p><strong>Host Web Applications</strong>: Deploys the front-end and some elements of the back-end of the WeAudit platform, ensuring reliable access and performance.</p></li>
+<li><p><strong>Manage Databases</strong>: Utilizes Lightsail’s managed database service to streamline operations without the overhead of database administration.</p></li>
+<li><p><strong>Serve Static and Dynamic Content</strong>: Efficiently serves static assets and dynamic content with high availability and robust performance.</p></li>
+</ol>
+</section>
+<section id="setting-up-lightsail">
+<h2>Setting Up Lightsail<a class="headerlink" href="#setting-up-lightsail" title="Link to this heading">¶</a></h2>
+<p>To set up a Lightsail instance for WeAudit, follow these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Create an Instance</strong>:
+- Log into the AWS Management Console and navigate to the Lightsail dashboard.
+- Click on ‘Create instance’. Choose your instance image (e.g., Linux/Unix) and select an application (e.g., WordPress, Node.js).</p></li>
+<li><p><strong>Configure the Instance</strong>:
+- Choose your instance plan based on expected traffic and data needs.
+- Assign a static IP to ensure that the address does not change after restarts.</p></li>
+<li><p><strong>Set Up Networking</strong>:
+- Configure the networking settings to open ports needed for your applications, typically HTTP (80), HTTPS (443), and SSH (22).</p></li>
+</ol>
+</section>
+<section id="example-configuration">
+<h2>Example Configuration<a class="headerlink" href="#example-configuration" title="Link to this heading">¶</a></h2>
+<p>Here’s an example of a typical configuration for a WeAudit Lightsail instance:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Region: US-East (N. Virginia)
+Blueprint: Linux/Unix
+Plan: $10/month (2 GB RAM, 1 vCPU, 60 GB SSD)
+Static IP: Enabled
+Networking: Firewall rules for HTTP, HTTPS, SSH
+</pre></div>
+</div>
+</section>
+<section id="monitoring-and-management">
+<h2>Monitoring and Management<a class="headerlink" href="#monitoring-and-management" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Snapshots</strong>: Regularly take snapshots of your Lightsail instance to ensure that you have backups available in case of failure.</p></li>
+<li><p><strong>Monitoring Tools</strong>: Utilize Lightsail’s built-in monitoring tools to keep track of CPU usage, network traffic, and disk I/O.</p></li>
+</ul>
+</section>
+<section id="security-considerations">
+<h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Data Security</strong>: Implement proper security groups and rules that strictly limit access based on the least privilege principle.</p></li>
+<li><p><strong>SSL/TLS</strong>: Secure your data in transit by installing SSL/TLS certificates for your web applications hosted on Lightsail.</p></li>
+</ul>
+<p>Amazon Lightsail provides a low-friction entry point to AWS, making it suitable for startups and small projects within WeAudit that require straightforward solutions with predictable costs.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Amazon Lightsail</a><ul>
+<li><a class="reference internal" href="#features-and-benefits">Features and Benefits</a></li>
+<li><a class="reference internal" href="#usage-in-weaudit">Usage in WeAudit</a></li>
+<li><a class="reference internal" href="#setting-up-lightsail">Setting Up Lightsail</a></li>
+<li><a class="reference internal" href="#example-configuration">Example Configuration</a></li>
+<li><a class="reference internal" href="#monitoring-and-management">Monitoring and Management</a></li>
+<li><a class="reference internal" href="#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/deployment/amazon_lightsail.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Amazon Lightsail</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>

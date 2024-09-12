@@ -1,0 +1,42 @@
+CORS Configuration
+==================
+
+Cross-Origin Resource Sharing (CORS) is crucial for WeAudit to securely manage requests between different domains. This section details the CORS settings implemented to ensure secure and functional API interactions.
+
+Configuration Details
+---------------------
+
+- **Enabled Methods**: Specify which HTTP methods (GET, POST, PUT, DELETE) are allowed from cross-origin requests.
+- **Allowed Origins**: Define which origins are permitted to access the resources.
+- **Headers and Exposed Headers**: Configure which headers can be used during the request and which headers are exposed to the client.
+
+Example Configuration
+---------------------
+
+.. code-block:: json
+
+    {
+        "AllowedOrigins": ["https://weaudit.example.com"],
+        "AllowedMethods": ["GET", "POST", "PUT"],
+        "AllowedHeaders": ["Content-Type", "Authorization"],
+        "ExposeHeaders": ["X-Request-ID"],
+        "MaxAgeSeconds": 3000
+    }
+
+Implementation Steps
+--------------------
+
+1. **Set CORS Rules on S3 Bucket**:
+   - Apply CORS configuration to your S3 bucket to control how resources are shared across different origins.
+
+2. **Configure CORS in Flask**:
+   - Use Flask-CORS extension to handle CORS in your Flask application, ensuring that the API endpoints respect the defined CORS rules.
+
+.. code-block:: python
+
+    from flask_cors import CORS
+
+    app = Flask(__name__)
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+This setup ensures that your Flask application properly handles CORS, allowing for secure and controlled access to your API endpoints.

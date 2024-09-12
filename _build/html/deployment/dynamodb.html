@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DynamoDB &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DynamoDB</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="dynamodb">
+<h1>DynamoDB<a class="headerlink" href="#dynamodb" title="Link to this heading">¶</a></h1>
+<p>Amazon DynamoDB is a fully-managed NoSQL database service that provides fast and predictable performance with seamless scalability. It is crucial for managing the metadata of images and other data in WeAudit.</p>
+<section id="features-and-benefits">
+<h2>Features and Benefits<a class="headerlink" href="#features-and-benefits" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Fully Managed</strong>: DynamoDB requires no hardware provisioning, setup, or configuration.</p></li>
+<li><p><strong>Performance</strong>: Delivers single-digit millisecond performance at any scale.</p></li>
+<li><p><strong>Scalability</strong>: Automatically scales tables up and down to adjust for capacity and maintain performance.</p></li>
+<li><p><strong>Data Model Flexibility</strong>: Supports both document and key-value data models.</p></li>
+</ul>
+</section>
+<section id="usage-in-weaudit">
+<h2>Usage in WeAudit<a class="headerlink" href="#usage-in-weaudit" title="Link to this heading">¶</a></h2>
+<p>WeAudit leverages DynamoDB for:</p>
+<ol class="arabic simple">
+<li><p><strong>Metadata Storage</strong>: Stores metadata for each image generated, including tags, creation date, and associated user data.</p></li>
+<li><p><strong>Session Management</strong>: Manages user sessions and authentication tokens.</p></li>
+<li><p><strong>Operational Metrics</strong>: Tracks and stores operational metrics for performance monitoring.</p></li>
+</ol>
+</section>
+<section id="setting-up-dynamodb">
+<h2>Setting Up DynamoDB<a class="headerlink" href="#setting-up-dynamodb" title="Link to this heading">¶</a></h2>
+<p>To utilize DynamoDB for WeAudit, follow these setup steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Create Tables</strong>:
+- Navigate to the DynamoDB section in the AWS Console.
+- Use the ‘Create table’ feature to define your tables and their key schemas.</p></li>
+<li><p><strong>Define Throughput</strong>:
+- Set the provisioned read and write capacity units based on your expected application load.</p></li>
+<li><p><strong>Configure Indexes</strong>:
+- Create global secondary indexes (GSIs) for non-key attributes that you frequently access.</p></li>
+</ol>
+</section>
+<section id="example-table-setup">
+<h2>Example Table Setup<a class="headerlink" href="#example-table-setup" title="Link to this heading">¶</a></h2>
+<p>Here is an example of setting up a DynamoDB table for storing image metadata:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;TableName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ImageMetadata&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;KeySchema&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;AttributeName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;imageId&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;KeyType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HASH&quot;</span><span class="p">},</span><span class="w">  </span><span class="c1">// Partition key</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;AttributeName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;KeyType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RANGE&quot;</span><span class="p">}</span><span class="w">     </span><span class="c1">// Sort key</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;AttributeDefinitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;AttributeName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;imageId&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;AttributeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;AttributeName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;AttributeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;ProvisionedThroughput&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;ReadCapacityUnits&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;WriteCapacityUnits&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="data-access-patterns">
+<h2>Data Access Patterns<a class="headerlink" href="#data-access-patterns" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Read Operations</strong>: Utilize consistent reads for critical operations where the most recent data is necessary.</p></li>
+<li><p><strong>Write Operations</strong>: Use batch writes to reduce costs and improve throughput when updating or adding new entries.</p></li>
+</ul>
+</section>
+<section id="monitoring-and-optimization">
+<h2>Monitoring and Optimization<a class="headerlink" href="#monitoring-and-optimization" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>AWS CloudWatch</strong>: Monitor the performance and operational metrics of your DynamoDB tables.</p></li>
+<li><p><strong>Auto Scaling</strong>: Utilize DynamoDB Auto Scaling to handle load changes without manual intervention.</p></li>
+</ul>
+</section>
+<section id="security-considerations">
+<h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>IAM Policies</strong>: Secure access to your DynamoDB resources using AWS Identity and Access Management (IAM) policies.</p></li>
+<li><p><strong>Encryption at Rest</strong>: Enable encryption at rest to secure your data using AWS managed keys.</p></li>
+</ul>
+<p>DynamoDB plays a pivotal role in WeAudit by providing a robust and scalable database solution for managing extensive datasets efficiently.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">DynamoDB</a><ul>
+<li><a class="reference internal" href="#features-and-benefits">Features and Benefits</a></li>
+<li><a class="reference internal" href="#usage-in-weaudit">Usage in WeAudit</a></li>
+<li><a class="reference internal" href="#setting-up-dynamodb">Setting Up DynamoDB</a></li>
+<li><a class="reference internal" href="#example-table-setup">Example Table Setup</a></li>
+<li><a class="reference internal" href="#data-access-patterns">Data Access Patterns</a></li>
+<li><a class="reference internal" href="#monitoring-and-optimization">Monitoring and Optimization</a></li>
+<li><a class="reference internal" href="#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/deployment/dynamodb.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DynamoDB</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>

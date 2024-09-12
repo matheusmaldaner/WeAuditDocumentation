@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>AWS Deployment &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Discourse Deployment" href="discourse_deployment.html" />
+    <link rel="prev" title="Deployment Section" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="discourse_deployment.html" title="Discourse Deployment"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Deployment Section"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Deployment Section</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Deployment</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="aws-deployment">
+<h1>AWS Deployment<a class="headerlink" href="#aws-deployment" title="Link to this heading">¶</a></h1>
+<p>This section covers the comprehensive deployment strategy using AWS services for the WeAudit platform, including AWS Lambda, S3 buckets, DynamoDB, and Amazon Lightsail.</p>
+</section>
+<section id="aws-lambda">
+<h1>AWS Lambda<a class="headerlink" href="#aws-lambda" title="Link to this heading">¶</a></h1>
+<p>AWS Lambda is a serverless compute service that lets you run code without provisioning or managing servers, executing code only when needed. WeAudit utilizes Lambda to handle various backend tasks dynamically.</p>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Automatic Scaling</strong>: Lambda functions scale automatically, executing code in response to each trigger.</p></li>
+<li><p><strong>No Server Management</strong>: No need to manage servers or runtimes; just write the code and upload it to Lambda.</p></li>
+<li><p><strong>Subsecond Metering</strong>: You are charged for every millisecond your code executes and the number of times your code is triggered.</p></li>
+</ul>
+</section>
+<section id="usage-in-weaudit">
+<h2>Usage in WeAudit<a class="headerlink" href="#usage-in-weaudit" title="Link to this heading">¶</a></h2>
+<p>WeAudit uses AWS Lambda for several purposes:</p>
+<ol class="arabic simple">
+<li><p><strong>Image Processing</strong>: Lambdas are used to process images after generation, handling tasks such as resizing, filtering, and applying custom algorithms.</p></li>
+<li><p><strong>Data Management</strong>: Functions interact with AWS DynamoDB to manage metadata and other necessary data operations.</p></li>
+<li><p><strong>API Responses</strong>: Serve as the backend for API endpoints, handling requests and responses efficiently.</p></li>
+</ol>
+</section>
+<section id="deployment-procedure">
+<h2>Deployment Procedure<a class="headerlink" href="#deployment-procedure" title="Link to this heading">¶</a></h2>
+<p>To deploy a Lambda function in WeAudit, follow these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Prepare Your Code</strong>: Write the function code in Python, ensuring it meets the AWS Lambda standards for runtime compatibility.</p></li>
+<li><p><strong>Set Up IAM Roles</strong>: Create an IAM role that grants your Lambda function permissions to access AWS resources like S3 buckets and DynamoDB.</p></li>
+<li><p><strong>Package Dependencies</strong>: If your function depends on external libraries, package them with your deployment package.</p></li>
+<li><p><strong>Deploy</strong>: Upload your code and dependencies via the AWS Management Console, AWS CLI, or automated CI/CD pipelines.</p></li>
+<li><p><strong>Configure Triggers</strong>: Set up the event sources that will trigger your function, such as HTTP requests via API Gateway or file uploads to S3.</p></li>
+</ol>
+</section>
+<section id="example-code">
+<h2>Example Code<a class="headerlink" href="#example-code" title="Link to this heading">¶</a></h2>
+<p>Here’s a basic example of a Lambda function used in WeAudit:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="c1"># Your code logic here</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;statusCode&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="s1">&#39;Hello from WeAudit Lambda&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="monitoring-and-logging">
+<h2>Monitoring and Logging<a class="headerlink" href="#monitoring-and-logging" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>AWS CloudWatch</strong>: Used to monitor function executions, including viewing logs, setting alarms, and automatically reacting to changes in your AWS resources.</p></li>
+<li><p><strong>X-Ray Tracing</strong>: Enables you to trace and analyze the user request journey through your AWS infrastructure.</p></li>
+</ul>
+</section>
+<section id="performance-optimization">
+<h2>Performance Optimization<a class="headerlink" href="#performance-optimization" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Memory Allocation</strong>: Adjust the memory allocation to match the function’s requirement for optimal performance.</p></li>
+<li><p><strong>Execution Timeout</strong>: Set appropriate timeouts to prevent functions from running longer than necessary, which could increase costs.</p></li>
+</ul>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Secure your Lambda functions</strong> by defining minimal privilege access through IAM roles.</p></li>
+<li><p><strong>Optimize your code</strong> to reduce execution time, which directly impacts costs.</p></li>
+<li><p><strong>Monitor and audit</strong> function executions to ensure they perform as expected and within security guidelines.</p></li>
+</ul>
+<p>Lambda functions play a critical role in WeAudit by handling high-volume requests quickly and cost-effectively, underpinning the platform’s responsiveness and efficiency.</p>
+</section>
+</section>
+<section id="aws-s3-buckets">
+<h1>AWS S3 Buckets<a class="headerlink" href="#aws-s3-buckets" title="Link to this heading">¶</a></h1>
+<p>Amazon S3 (Simple Storage Service) provides scalable object storage for data backup, collection, and analytics. An ideal place for WeAudit to store generated images and other large data securely.</p>
+<section id="features-and-benefits">
+<h2>Features and Benefits<a class="headerlink" href="#features-and-benefits" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Scalability</strong>: Automatically scales to accommodate data growth.</p></li>
+<li><p><strong>Durability and Availability</strong>: Offers industry-leading durability and availability.</p></li>
+<li><p><strong>Security</strong>: Provides robust controls to ensure data is secure from unauthorized access.</p></li>
+<li><p><strong>Cost-Effective</strong>: Storage pricing is based on usage, which means you pay only for what you use.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Usage in WeAudit<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>WeAudit uses Amazon S3 to:</p>
+<ol class="arabic simple">
+<li><p><strong>Store Generated Images</strong>: All images created by the Replicate API are stored securely in S3 buckets.</p></li>
+<li><p><strong>Backup and Archiving</strong>: Keeps backups of important data, ensuring data durability and recoverability.</p></li>
+<li><p><strong>Serve Static Files</strong>: Hosts static files that are part of the WeAudit web application.</p></li>
+</ol>
+</section>
+<section id="setting-up-s3-buckets">
+<h2>Setting Up S3 Buckets<a class="headerlink" href="#setting-up-s3-buckets" title="Link to this heading">¶</a></h2>
+<p>To create and configure an S3 bucket for WeAudit, follow these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Create the Bucket</strong>:
+- Navigate to the S3 section in the AWS Management Console.
+- Click on ‘Create Bucket’, provide a name, and select the region.</p></li>
+<li><p><strong>Configure Permissions</strong>:
+- Apply bucket policies to manage access permissions.
+- Ensure that public access is blocked unless necessary.</p></li>
+<li><p><strong>Enable Versioning</strong>:
+- Turn on versioning to keep an immutable version of objects to protect against unintended deletes or overwrites.</p></li>
+<li><p><strong>Set Lifecycle Policies</strong>:
+- Define lifecycle rules to manage objects’ lifespans, such as automatically archiving or deleting old data.</p></li>
+</ol>
+</section>
+<section id="example-configuration">
+<h2>Example Configuration<a class="headerlink" href="#example-configuration" title="Link to this heading">¶</a></h2>
+<p>Below is an example of a bucket policy that grants read access to authenticated users:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AddPerm&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Principal&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:s3:::examplebucket/*&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;StringEquals&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;aws:PrincipalOrgID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;o-xxxxxxxxxxx&quot;</span><span class="p">]}}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="monitoring-and-management">
+<h2>Monitoring and Management<a class="headerlink" href="#monitoring-and-management" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>AWS CloudWatch</strong>: Monitor bucket access and usage patterns.</p></li>
+<li><p><strong>AWS CloudTrail</strong>: Track user activity and API usage for auditing.</p></li>
+<li><p><strong>S3 Analytics</strong>: Analyze and optimize storage costs and performance.</p></li>
+</ul>
+</section>
+<section id="security-considerations">
+<h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Encrypt Data at Rest</strong>: Use S3 managed keys (SSE-S3) or AWS KMS keys (SSE-KMS) for encryption.</p></li>
+<li><p><strong>Secure Data in Transit</strong>: Ensure data is transferred over SSL by enabling HTTPS access only on your bucket.</p></li>
+</ul>
+<p>S3 buckets are integral to the storage strategy of WeAudit, providing a reliable and secure way to manage the application’s data needs.</p>
+</section>
+</section>
+<section id="dynamodb">
+<h1>DynamoDB<a class="headerlink" href="#dynamodb" title="Link to this heading">¶</a></h1>
+<p>Amazon DynamoDB is a fully-managed NoSQL database service that provides fast and predictable performance with seamless scalability. It is crucial for managing the metadata of images and other data in WeAudit.</p>
+<section id="id2">
+<h2>Features and Benefits<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Fully Managed</strong>: DynamoDB requires no hardware provisioning, setup, or configuration.</p></li>
+<li><p><strong>Performance</strong>: Delivers single-digit millisecond performance at any scale.</p></li>
+<li><p><strong>Scalability</strong>: Automatically scales tables up and down to adjust for capacity and maintain performance.</p></li>
+<li><p><strong>Data Model Flexibility</strong>: Supports both document and key-value data models.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Usage in WeAudit<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>WeAudit leverages DynamoDB for:</p>
+<ol class="arabic simple">
+<li><p><strong>Metadata Storage</strong>: Stores metadata for each image generated, including tags, creation date, and associated user data.</p></li>
+<li><p><strong>Session Management</strong>: Manages user sessions and authentication tokens.</p></li>
+<li><p><strong>Operational Metrics</strong>: Tracks and stores operational metrics for performance monitoring.</p></li>
+</ol>
+</section>
+<section id="setting-up-dynamodb">
+<h2>Setting Up DynamoDB<a class="headerlink" href="#setting-up-dynamodb" title="Link to this heading">¶</a></h2>
+<p>To utilize DynamoDB for WeAudit, follow these setup steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Create Tables</strong>:
+- Navigate to the DynamoDB section in the AWS Console.
+- Use the ‘Create table’ feature to define your tables and their key schemas.</p></li>
+<li><p><strong>Define Throughput</strong>:
+- Set the provisioned read and write capacity units based on your expected application load.</p></li>
+<li><p><strong>Configure Indexes</strong>:
+- Create global secondary indexes (GSIs) for non-key attributes that you frequently access.</p></li>
+</ol>
+</section>
+<section id="example-table-setup">
+<h2>Example Table Setup<a class="headerlink" href="#example-table-setup" title="Link to this heading">¶</a></h2>
+<p>Here is an example of setting up a DynamoDB table for storing image metadata:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;TableName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ImageMetadata&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;KeySchema&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;AttributeName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;imageId&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;KeyType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HASH&quot;</span><span class="p">},</span><span class="w">  </span><span class="c1">// Partition key</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;AttributeName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;KeyType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RANGE&quot;</span><span class="p">}</span><span class="w">     </span><span class="c1">// Sort key</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;AttributeDefinitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;AttributeName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;imageId&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;AttributeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;AttributeName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;AttributeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;ProvisionedThroughput&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;ReadCapacityUnits&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;WriteCapacityUnits&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="data-access-patterns">
+<h2>Data Access Patterns<a class="headerlink" href="#data-access-patterns" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Read Operations</strong>: Utilize consistent reads for critical operations where the most recent data is necessary.</p></li>
+<li><p><strong>Write Operations</strong>: Use batch writes to reduce costs and improve throughput when updating or adding new entries.</p></li>
+</ul>
+</section>
+<section id="monitoring-and-optimization">
+<h2>Monitoring and Optimization<a class="headerlink" href="#monitoring-and-optimization" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>AWS CloudWatch</strong>: Monitor the performance and operational metrics of your DynamoDB tables.</p></li>
+<li><p><strong>Auto Scaling</strong>: Utilize DynamoDB Auto Scaling to handle load changes without manual intervention.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Security Considerations<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>IAM Policies</strong>: Secure access to your DynamoDB resources using AWS Identity and Access Management (IAM) policies.</p></li>
+<li><p><strong>Encryption at Rest</strong>: Enable encryption at rest to secure your data using AWS managed keys.</p></li>
+</ul>
+<p>DynamoDB plays a pivotal role in WeAudit by providing a robust and scalable database solution for managing extensive datasets efficiently.</p>
+</section>
+</section>
+<section id="amazon-lightsail">
+<h1>Amazon Lightsail<a class="headerlink" href="#amazon-lightsail" title="Link to this heading">¶</a></h1>
+<p>Amazon Lightsail is a simplified cloud computing solution, offering an easy-to-use platform for deploying and managing virtual private servers. It provides a cost-effective way to launch and manage applications with predictable pricing.</p>
+<section id="id5">
+<h2>Features and Benefits<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Simplicity</strong>: Provides an intuitive interface for managing virtual private servers, databases, and storage.</p></li>
+<li><p><strong>Cost-Effectiveness</strong>: Offers a straightforward, low monthly price that includes a server, SSD-based storage, data transfer, DNS management, and a static IP.</p></li>
+<li><p><strong>Scalable</strong>: While initially designed for simpler projects, Lightsail can scale to use more sophisticated AWS services as needs grow.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>Usage in WeAudit<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<p>WeAudit uses Amazon Lightsail to:</p>
+<ol class="arabic simple">
+<li><p><strong>Host Web Applications</strong>: Deploys the front-end and some elements of the back-end of the WeAudit platform, ensuring reliable access and performance.</p></li>
+<li><p><strong>Manage Databases</strong>: Utilizes Lightsail’s managed database service to streamline operations without the overhead of database administration.</p></li>
+<li><p><strong>Serve Static and Dynamic Content</strong>: Efficiently serves static assets and dynamic content with high availability and robust performance.</p></li>
+</ol>
+</section>
+<section id="setting-up-lightsail">
+<h2>Setting Up Lightsail<a class="headerlink" href="#setting-up-lightsail" title="Link to this heading">¶</a></h2>
+<p>To set up a Lightsail instance for WeAudit, follow these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Create an Instance</strong>:
+- Log into the AWS Management Console and navigate to the Lightsail dashboard.
+- Click on ‘Create instance’. Choose your instance image (e.g., Linux/Unix) and select an application (e.g., WordPress, Node.js).</p></li>
+<li><p><strong>Configure the Instance</strong>:
+- Choose your instance plan based on expected traffic and data needs.
+- Assign a static IP to ensure that the address does not change after restarts.</p></li>
+<li><p><strong>Set Up Networking</strong>:
+- Configure the networking settings to open ports needed for your applications, typically HTTP (80), HTTPS (443), and SSH (22).</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Example Configuration<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<p>Here’s an example of a typical configuration for a WeAudit Lightsail instance:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Region: US-East (N. Virginia)
+Blueprint: Linux/Unix
+Plan: $10/month (2 GB RAM, 1 vCPU, 60 GB SSD)
+Static IP: Enabled
+Networking: Firewall rules for HTTP, HTTPS, SSH
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h2>Monitoring and Management<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Snapshots</strong>: Regularly take snapshots of your Lightsail instance to ensure that you have backups available in case of failure.</p></li>
+<li><p><strong>Monitoring Tools</strong>: Utilize Lightsail’s built-in monitoring tools to keep track of CPU usage, network traffic, and disk I/O.</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>Security Considerations<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Data Security</strong>: Implement proper security groups and rules that strictly limit access based on the least privilege principle.</p></li>
+<li><p><strong>SSL/TLS</strong>: Secure your data in transit by installing SSL/TLS certificates for your web applications hosted on Lightsail.</p></li>
+</ul>
+<p>Amazon Lightsail provides a low-friction entry point to AWS, making it suitable for startups and small projects within WeAudit that require straightforward solutions with predictable costs.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">AWS Deployment</a></li>
+<li><a class="reference internal" href="#aws-lambda">AWS Lambda</a><ul>
+<li><a class="reference internal" href="#key-features">Key Features</a></li>
+<li><a class="reference internal" href="#usage-in-weaudit">Usage in WeAudit</a></li>
+<li><a class="reference internal" href="#deployment-procedure">Deployment Procedure</a></li>
+<li><a class="reference internal" href="#example-code">Example Code</a></li>
+<li><a class="reference internal" href="#monitoring-and-logging">Monitoring and Logging</a></li>
+<li><a class="reference internal" href="#performance-optimization">Performance Optimization</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aws-s3-buckets">AWS S3 Buckets</a><ul>
+<li><a class="reference internal" href="#features-and-benefits">Features and Benefits</a></li>
+<li><a class="reference internal" href="#id1">Usage in WeAudit</a></li>
+<li><a class="reference internal" href="#setting-up-s3-buckets">Setting Up S3 Buckets</a></li>
+<li><a class="reference internal" href="#example-configuration">Example Configuration</a></li>
+<li><a class="reference internal" href="#monitoring-and-management">Monitoring and Management</a></li>
+<li><a class="reference internal" href="#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dynamodb">DynamoDB</a><ul>
+<li><a class="reference internal" href="#id2">Features and Benefits</a></li>
+<li><a class="reference internal" href="#id3">Usage in WeAudit</a></li>
+<li><a class="reference internal" href="#setting-up-dynamodb">Setting Up DynamoDB</a></li>
+<li><a class="reference internal" href="#example-table-setup">Example Table Setup</a></li>
+<li><a class="reference internal" href="#data-access-patterns">Data Access Patterns</a></li>
+<li><a class="reference internal" href="#monitoring-and-optimization">Monitoring and Optimization</a></li>
+<li><a class="reference internal" href="#id4">Security Considerations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#amazon-lightsail">Amazon Lightsail</a><ul>
+<li><a class="reference internal" href="#id5">Features and Benefits</a></li>
+<li><a class="reference internal" href="#id6">Usage in WeAudit</a></li>
+<li><a class="reference internal" href="#setting-up-lightsail">Setting Up Lightsail</a></li>
+<li><a class="reference internal" href="#id7">Example Configuration</a></li>
+<li><a class="reference internal" href="#id8">Monitoring and Management</a></li>
+<li><a class="reference internal" href="#id9">Security Considerations</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Deployment Section</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="discourse_deployment.html"
+                          title="next chapter">Discourse Deployment</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/deployment/aws_deployment.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="discourse_deployment.html" title="Discourse Deployment"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Deployment Section"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Deployment Section</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Deployment</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>

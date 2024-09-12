@@ -1,0 +1,44 @@
+Replicate Usage
+===============
+
+Replicate is a core component in WeAudit for generating AI-driven images. It provides access to various pre-trained models and facilitates the creation of images based on textual prompts.
+
+How We Use Replicate
+--------------------
+
+WeAudit integrates Replicate to:
+
+1. **Generate Images**: Leverage state-of-the-art models for generating images directly from textual descriptions.
+2. **Custom Model Deployment**: Deploy and manage custom models specific to WeAudit's needs, enhancing the platform's capability to audit AI behaviors.
+
+Setting Up Replicate
+--------------------
+
+To utilize Replicate within WeAudit:
+
+1. **API Key Configuration**:
+   - Obtain an API key from Replicate.
+   - Securely store and use the key in your application to authenticate API requests.
+
+2. **Making API Calls**:
+   - Use the Replicate API to send image generation requests.
+   - Handle the JSON responses that include URLs to the generated images.
+
+Example API Call
+----------------
+
+Below is an example of using the Replicate API to generate an image:
+
+.. code-block:: python
+
+    import requests
+
+    def generate_image(prompt):
+        url = "https://api.replicate.com/v1/predictions"
+        headers = {'Authorization': 'Token YOUR_REPLICATE_API_KEY'}
+        data = {'version': 'certain-model-version', 'input': {'prompt': prompt}}
+
+        response = requests.post(url, headers=headers, json=data)
+        return response.json()
+
+This function sends a request to generate an image based on a prompt, returning the JSON response from Replicate.
