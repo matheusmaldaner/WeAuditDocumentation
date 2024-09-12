@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Replicate Integration &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DynamoDB Integration" href="dynamodb_integration.html" />
+    <link rel="prev" title="Flask Application Endpoints" href="flask_application_endpoints.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dynamodb_integration.html" title="DynamoDB Integration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="flask_application_endpoints.html" title="Flask Application Endpoints"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API Endpoints</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Replicate Integration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="replicate-integration">
+<h1>Replicate Integration<a class="headerlink" href="#replicate-integration" title="Link to this heading">¶</a></h1>
+<p>WeAudit utilizes the Replicate API to access a variety of pre-trained models for image generation. This integration is critical for enabling dynamic and scalable image creation based on user prompts.</p>
+<section id="endpoint-overview">
+<h2>Endpoint Overview<a class="headerlink" href="#endpoint-overview" title="Link to this heading">¶</a></h2>
+<dl>
+<dt><strong>/replicate/predict</strong></dt><dd><ul>
+<li><p><strong>Method</strong>: POST</p></li>
+<li><p><strong>Description</strong>: Sends a request to Replicate to generate images based on a specific model and input parameters.</p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stability-ai/stable-diffusion&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A serene lake at sunset&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;prediction_id&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;processing&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="integration-details">
+<h2>Integration Details<a class="headerlink" href="#integration-details" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Authentication</strong>: API requests must include an authentication token provided by Replicate during the setup process.</p></li>
+<li><p><strong>API Calls</strong>: Utilize HTTPS for secure communication. Handle rate limits and possible errors gracefully to ensure robustness.</p></li>
+<li><p><strong>Data Handling</strong>: Ensure that the responses from Replicate are parsed correctly and that any image URLs or data are securely stored and handled within WeAudit.</p></li>
+</ul>
+</section>
+<section id="example-usage">
+<h2>Example Usage<a class="headerlink" href="#example-usage" title="Link to this heading">¶</a></h2>
+<p>An example function to call the Replicate API might look like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">def</span> <span class="nf">call_replicate_api</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.replicate.com/v1/predictions&quot;</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &lt;Your-Replicate-Token&gt;&#39;</span><span class="p">}</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;stability-ai/stable-diffusion&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This function demonstrates how to interact with the Replicate API, including handling the necessary headers and JSON body for image generation.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Replicate Integration</a><ul>
+<li><a class="reference internal" href="#endpoint-overview">Endpoint Overview</a></li>
+<li><a class="reference internal" href="#integration-details">Integration Details</a></li>
+<li><a class="reference internal" href="#example-usage">Example Usage</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="flask_application_endpoints.html"
+                          title="previous chapter">Flask Application Endpoints</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="dynamodb_integration.html"
+                          title="next chapter">DynamoDB Integration</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api_endpoints/replicate_integration.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dynamodb_integration.html" title="DynamoDB Integration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="flask_application_endpoints.html" title="Flask Application Endpoints"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API Endpoints</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Replicate Integration</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>

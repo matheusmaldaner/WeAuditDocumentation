@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>S3 Integration &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CORS Configuration" href="cors_configuration.html" />
+    <link rel="prev" title="DynamoDB Integration" href="dynamodb_integration.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cors_configuration.html" title="CORS Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dynamodb_integration.html" title="DynamoDB Integration"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API Endpoints</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">S3 Integration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="s3-integration">
+<h1>S3 Integration<a class="headerlink" href="#s3-integration" title="Link to this heading">¶</a></h1>
+<p>Amazon S3 provides robust and secure storage for WeAudit, storing generated images and other digital assets. This section outlines how WeAudit integrates S3 to manage and retrieve these resources efficiently.</p>
+<section id="endpoint-overview">
+<h2>Endpoint Overview<a class="headerlink" href="#endpoint-overview" title="Link to this heading">¶</a></h2>
+<dl>
+<dt><strong>/images/upload</strong></dt><dd><ul>
+<li><p><strong>Method</strong>: POST</p></li>
+<li><p><strong>Description</strong>: Uploads generated images to an S3 bucket.</p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;image_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;base64_encoded_data&gt;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;content_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;image_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unique_image_identifier&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Image uploaded successfully.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://s3.amazonaws.com/yourbucket/unique_image_identifier.jpg&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="integration-details">
+<h2>Integration Details<a class="headerlink" href="#integration-details" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Bucket Configuration</strong>: Set up and configure an S3 bucket with appropriate permissions and policies to ensure secure storage and access.</p></li>
+<li><p><strong>Data Transfer</strong>: Use AWS SDKs to handle data uploads and retrievals, ensuring data is encrypted in transit and at rest.</p></li>
+</ul>
+</section>
+<section id="example-usage">
+<h2>Example Usage<a class="headerlink" href="#example-usage" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">boto3</span>
+
+<span class="k">def</span> <span class="nf">upload_image_to_s3</span><span class="p">(</span><span class="n">image_data</span><span class="p">,</span> <span class="n">content_type</span><span class="p">,</span> <span class="n">image_id</span><span class="p">):</span>
+    <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">)</span>
+    <span class="n">s3</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span>
+        <span class="n">Bucket</span><span class="o">=</span><span class="s1">&#39;your-s3-bucket&#39;</span><span class="p">,</span>
+        <span class="n">Key</span><span class="o">=</span><span class="n">image_id</span><span class="p">,</span>
+        <span class="n">Body</span><span class="o">=</span><span class="n">image_data</span><span class="p">,</span>
+        <span class="n">ContentType</span><span class="o">=</span><span class="n">content_type</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>This function demonstrates how to upload an image to an S3 bucket using the AWS SDK for Python (Boto3).</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">S3 Integration</a><ul>
+<li><a class="reference internal" href="#endpoint-overview">Endpoint Overview</a></li>
+<li><a class="reference internal" href="#integration-details">Integration Details</a></li>
+<li><a class="reference internal" href="#example-usage">Example Usage</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="dynamodb_integration.html"
+                          title="previous chapter">DynamoDB Integration</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cors_configuration.html"
+                          title="next chapter">CORS Configuration</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api_endpoints/s3_integration.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="cors_configuration.html" title="CORS Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dynamodb_integration.html" title="DynamoDB Integration"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API Endpoints</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">S3 Integration</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>

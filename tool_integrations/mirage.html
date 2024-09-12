@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Mirage &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Taiga" href="taiga.html" />
+    <link rel="prev" title="Tool Integrations" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="taiga.html" title="Taiga"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tool Integrations"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tool Integrations</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mirage</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mirage">
+<h1>Mirage<a class="headerlink" href="#mirage" title="Link to this heading">¶</a></h1>
+<p>Mirage is a tool within WeAudit designed to facilitate the real-time analysis and comparison of images generated through AI models to detect biases and anomalies.</p>
+<section id="features-and-capabilities">
+<h2>Features and Capabilities<a class="headerlink" href="#features-and-capabilities" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Image Comparison</strong>: Provides functionalities to compare multiple images side by side to identify differences and anomalies.</p></li>
+<li><p><strong>Bias Detection</strong>: Utilizes custom algorithms to detect and report potential biases in image generation.</p></li>
+</ul>
+</section>
+<section id="setting-up-mirage">
+<h2>Setting Up Mirage<a class="headerlink" href="#setting-up-mirage" title="Link to this heading">¶</a></h2>
+<p>To incorporate Mirage effectively in WeAudit:</p>
+<ol class="arabic simple">
+<li><p><strong>Installation</strong>: Deploy Mirage as a microservice within the AWS infrastructure, ensuring scalability and accessibility.</p></li>
+<li><p><strong>Integration</strong>: Link Mirage with the WeAudit’s main system to fetch and send image data seamlessly.</p></li>
+</ol>
+</section>
+<section id="usage-example">
+<h2>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading">¶</a></h2>
+<p>Mirage is typically used in scenarios where rapid analysis of generated images is crucial. For example, auditors may use Mirage to quickly compare images generated from different demographic prompts to assess bias.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Example Mirage function call</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">imageGeneration</span><span class="p">(</span><span class="nx">prompt</span><span class="p">,</span><span class="w"> </span><span class="nx">modelName</span><span class="p">,</span><span class="w"> </span><span class="nx">modelVersion</span><span class="p">,</span><span class="w"> </span><span class="nx">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// Construct the body in the format expected by your Lambda function</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">requestBody</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">model_name</span><span class="o">:</span><span class="w"> </span><span class="nx">modelName</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">model_version_id</span><span class="o">:</span><span class="w"> </span><span class="nx">modelVersion</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">prompt</span><span class="o">:</span><span class="w"> </span><span class="nx">prompt</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">num</span><span class="o">:</span><span class="w"> </span><span class="nx">n</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">&quot;https://vtsuohpeo0.execute-api.us-east-1.amazonaws.com/Prod/mirage&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nx">requestBody</span>
+<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="c1">// Retuns an array of generated images from Replicate</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Mirage</a><ul>
+<li><a class="reference internal" href="#features-and-capabilities">Features and Capabilities</a></li>
+<li><a class="reference internal" href="#setting-up-mirage">Setting Up Mirage</a></li>
+<li><a class="reference internal" href="#usage-example">Usage Example</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Tool Integrations</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="taiga.html"
+                          title="next chapter">Taiga</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tool_integrations/mirage.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="taiga.html" title="Taiga"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tool Integrations"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Tool Integrations</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mirage</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>

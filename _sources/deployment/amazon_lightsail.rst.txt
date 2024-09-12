@@ -1,0 +1,64 @@
+Amazon Lightsail
+================
+
+Amazon Lightsail is a simplified cloud computing solution, offering an easy-to-use platform for deploying and managing virtual private servers. It provides a cost-effective way to launch and manage applications with predictable pricing.
+
+Features and Benefits
+---------------------
+
+- **Simplicity**: Provides an intuitive interface for managing virtual private servers, databases, and storage.
+- **Cost-Effectiveness**: Offers a straightforward, low monthly price that includes a server, SSD-based storage, data transfer, DNS management, and a static IP.
+- **Scalable**: While initially designed for simpler projects, Lightsail can scale to use more sophisticated AWS services as needs grow.
+
+Usage in WeAudit
+----------------
+
+WeAudit uses Amazon Lightsail to:
+
+1. **Host Web Applications**: Deploys the front-end and some elements of the back-end of the WeAudit platform, ensuring reliable access and performance.
+2. **Manage Databases**: Utilizes Lightsail's managed database service to streamline operations without the overhead of database administration.
+3. **Serve Static and Dynamic Content**: Efficiently serves static assets and dynamic content with high availability and robust performance.
+
+Setting Up Lightsail
+--------------------
+
+To set up a Lightsail instance for WeAudit, follow these steps:
+
+1. **Create an Instance**:
+   - Log into the AWS Management Console and navigate to the Lightsail dashboard.
+   - Click on ‘Create instance’. Choose your instance image (e.g., Linux/Unix) and select an application (e.g., WordPress, Node.js).
+
+2. **Configure the Instance**:
+   - Choose your instance plan based on expected traffic and data needs.
+   - Assign a static IP to ensure that the address does not change after restarts.
+
+3. **Set Up Networking**:
+   - Configure the networking settings to open ports needed for your applications, typically HTTP (80), HTTPS (443), and SSH (22).
+
+Example Configuration
+---------------------
+
+Here’s an example of a typical configuration for a WeAudit Lightsail instance:
+
+.. code-block:: text
+
+    Region: US-East (N. Virginia)
+    Blueprint: Linux/Unix
+    Plan: $10/month (2 GB RAM, 1 vCPU, 60 GB SSD)
+    Static IP: Enabled
+    Networking: Firewall rules for HTTP, HTTPS, SSH
+
+Monitoring and Management
+-------------------------
+
+- **Snapshots**: Regularly take snapshots of your Lightsail instance to ensure that you have backups available in case of failure.
+- **Monitoring Tools**: Utilize Lightsail's built-in monitoring tools to keep track of CPU usage, network traffic, and disk I/O.
+
+Security Considerations
+-----------------------
+
+- **Data Security**: Implement proper security groups and rules that strictly limit access based on the least privilege principle.
+- **SSL/TLS**: Secure your data in transit by installing SSL/TLS certificates for your web applications hosted on Lightsail.
+
+Amazon Lightsail provides a low-friction entry point to AWS, making it suitable for startups and small projects within WeAudit that require straightforward solutions with predictable costs.
+

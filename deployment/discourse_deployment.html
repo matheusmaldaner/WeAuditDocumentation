@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Discourse Deployment &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Security and Credentials" href="security_credentials.html" />
+    <link rel="prev" title="AWS Deployment" href="aws_deployment.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="security_credentials.html" title="Security and Credentials"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="aws_deployment.html" title="AWS Deployment"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Deployment Section</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Discourse Deployment</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="discourse-deployment">
+<h1>Discourse Deployment<a class="headerlink" href="#discourse-deployment" title="Link to this heading">¶</a></h1>
+<p>Discourse is used in WeAudit as a platform for community discussions, support, and collaboration. This section details the deployment process of Discourse, configuring it for optimal use within WeAudit.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>Discourse is an open-source discussion platform built for improving communication and social interaction for projects and communities. It is highly customizable and integrates well with modern web standards and services.</p>
+</section>
+<section id="deployment-steps">
+<h2>Deployment Steps<a class="headerlink" href="#deployment-steps" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p><strong>Prepare Your Environment</strong>:
+- Ensure you have a Virtual Private Server (VPS) or a cloud instance that meets Discourse’s minimum hardware requirements: 1 GB RAM and 10 GB storage space.</p></li>
+<li><p><strong>Install Docker</strong>:
+- Discourse runs in a Docker container. Install Docker on your server if it’s not already installed:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://get.docker.com<span class="w"> </span>-o<span class="w"> </span>get-docker.sh
+sh<span class="w"> </span>get-docker.sh
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>Clone the Discourse Repository</strong>:
+- Clone the official Discourse Docker repository to your server:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/discourse/discourse_docker.git<span class="w"> </span>/var/discourse
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>Configure Discourse</strong>:
+- Navigate to the cloned repository and run the setup script to start the configuration:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/var/discourse
+./discourse-setup
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>Follow the prompts to set up Discourse, including SMTP settings for email, domain configuration, and administrative credentials.</p></li>
+</ul>
+</li>
+<li><p><strong>Launch Discourse</strong>:
+- Once configured, Discourse will be deployed within a Docker container. Access your Discourse site by navigating to the domain you configured during setup.</p></li>
+</ol>
+</section>
+<section id="post-deployment-configuration">
+<h2>Post-Deployment Configuration<a class="headerlink" href="#post-deployment-configuration" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Customization</strong>: Access the Discourse admin panel to customize the site appearance, settings, and plugins.</p></li>
+<li><p><strong>User Management</strong>: Set up groups, categories, and permissions according to the needs of WeAudit.</p></li>
+</ul>
+</section>
+<section id="security-considerations">
+<h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Ensure that HTTPS is enabled to secure communications.</p></li>
+<li><p>Regularly update Discourse and Docker to protect against vulnerabilities.</p></li>
+</ul>
+<p>This setup provides a robust discussion platform for WeAudit, facilitating community engagement and support.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Discourse Deployment</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#deployment-steps">Deployment Steps</a></li>
+<li><a class="reference internal" href="#post-deployment-configuration">Post-Deployment Configuration</a></li>
+<li><a class="reference internal" href="#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="aws_deployment.html"
+                          title="previous chapter">AWS Deployment</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="security_credentials.html"
+                          title="next chapter">Security and Credentials</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/deployment/discourse_deployment.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="security_credentials.html" title="Security and Credentials"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="aws_deployment.html" title="AWS Deployment"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Deployment Section</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Discourse Deployment</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>

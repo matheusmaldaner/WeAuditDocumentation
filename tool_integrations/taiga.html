@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Taiga &#8212; WeAudit 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=0f882399" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Ouroboros" href="ouroboros.html" />
+    <link rel="prev" title="Mirage" href="mirage.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ouroboros.html" title="Ouroboros"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mirage.html" title="Mirage"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tool Integrations</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Taiga</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="taiga">
+<h1>Taiga<a class="headerlink" href="#taiga" title="Link to this heading">¶</a></h1>
+<p>Taiga is a specialized tool within WeAudit that focuses on processing and managing large datasets of images for longitudinal studies and extensive audits.</p>
+<section id="features-and-capabilities">
+<h2>Features and Capabilities<a class="headerlink" href="#features-and-capabilities" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Large-scale Data Management</strong>: Handles extensive image datasets with robust data management tools.</p></li>
+<li><p><strong>Analytical Processing</strong>: Provides powerful analytical tools to process and analyze image data over time.</p></li>
+</ul>
+</section>
+<section id="setting-up-taiga">
+<h2>Setting Up Taiga<a class="headerlink" href="#setting-up-taiga" title="Link to this heading">¶</a></h2>
+<p>To set up Taiga for use within WeAudit:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Storage</strong>: Utilize AWS services like S3 and DynamoDB for storing and retrieving large datasets.</p></li>
+<li><p><strong>Compute Resources</strong>: Ensure that adequate computing resources are available in AWS to handle the processing load.</p></li>
+</ol>
+</section>
+<section id="usage-example">
+<h2>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading">¶</a></h2>
+<p>Taiga is used when handling projects that require analysis of changes in AI behavior over time or across different model updates.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example Taiga function to analyze image dataset</span>
+<span class="k">def</span> <span class="nf">analyze_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">taiga</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+<p>This function processes an entire dataset and returns analytical results, which could include trends, patterns, or anomalies detected.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Taiga</a><ul>
+<li><a class="reference internal" href="#features-and-capabilities">Features and Capabilities</a></li>
+<li><a class="reference internal" href="#setting-up-taiga">Setting Up Taiga</a></li>
+<li><a class="reference internal" href="#usage-example">Usage Example</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="mirage.html"
+                          title="previous chapter">Mirage</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="ouroboros.html"
+                          title="next chapter">Ouroboros</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tool_integrations/taiga.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ouroboros.html" title="Ouroboros"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mirage.html" title="Mirage"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WeAudit 2024 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Tool Integrations</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Taiga</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Carnegie Mellon University.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    </div>
+  </body>
+</html>
