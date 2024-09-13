@@ -1,8 +1,6 @@
 Taiga
 =====
 
-Description:
-
 Taiga is a tool within WeAudit for the side-by-side comparison of images with varying prompts. 
 
 
