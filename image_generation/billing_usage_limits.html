@@ -41,7 +41,6 @@
             
   <section id="billing-and-usage-limits">
 <h1>Billing and Usage Limits<a class="headerlink" href="#billing-and-usage-limits" title="Link to this heading">¶</a></h1>
-<p>Understanding the billing structure and usage limits of Replicate is crucial for managing costs and ensuring efficient operation of the WeAudit platform.</p>
 <section id="billing-structure">
 <h2>Billing Structure<a class="headerlink" href="#billing-structure" title="Link to this heading">¶</a></h2>
 <ul class="simple">
@@ -52,14 +51,13 @@
 <h2>Usage Limits<a class="headerlink" href="#usage-limits" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Monthly Budget</strong>: Ensure that usage remains within the allocated budget of $100 per month.</p></li>
-<li><p><strong>Concurrency Limits</strong>: Handle concurrency to make multiple calls in parallel, effectively managing the limits imposed by Replicate.</p></li>
+<li><p><strong>Concurrency Limits</strong>: Several text-to-image models cap the amount of images able to be generated at 4. In order to bypass this, we can send concurrent jobs, so if the user needs to generate 10 images we can generate 4 + 4 + 2 in parallel.</p></li>
 </ul>
 </section>
 <section id="strategies-to-manage-costs">
 <h2>Strategies to Manage Costs<a class="headerlink" href="#strategies-to-manage-costs" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Optimize Usage</strong>: Only generate images when necessary, and cache results to avoid redundant calls.</p></li>
-<li><p><strong>Monitor Usage</strong>: Regularly review usage reports provided by Replicate to adjust strategies as needed.</p></li>
+<li><p>Check Replicate to see how much money has been spent in the previous month and which models are the most expensive.</p></li>
 </ul>
 </section>
 </section>

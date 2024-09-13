@@ -1,8 +1,6 @@
 Billing and Usage Limits
 ========================
 
-Understanding the billing structure and usage limits of Replicate is crucial for managing costs and ensuring efficient operation of the WeAudit platform.
-
 Billing Structure
 -----------------
 
@@ -12,10 +10,10 @@ Usage Limits
 ------------
 
 - **Monthly Budget**: Ensure that usage remains within the allocated budget of $100 per month.
-- **Concurrency Limits**: Handle concurrency to make multiple calls in parallel, effectively managing the limits imposed by Replicate.
+- **Concurrency Limits**: Several text-to-image models cap the amount of images able to be generated at 4. In order to bypass this, we can send concurrent jobs, so if the user needs to generate 10 images we can generate 4 + 4 + 2 in parallel.
+
 
 Strategies to Manage Costs
 --------------------------
 
-- **Optimize Usage**: Only generate images when necessary, and cache results to avoid redundant calls.
-- **Monitor Usage**: Regularly review usage reports provided by Replicate to adjust strategies as needed.
+- Check Replicate to see how much money has been spent in the previous month and which models are the most expensive.
