@@ -23,6 +23,21 @@ if errorlevel 9009 (
 	exit /b 1
 )
 
+if "%1" == "clean" (
+	REM Clean build directory
+	%SPHINXBUILD% -M clean %SOURCEDIR% %BUILDDIR%
+	
+	REM Create the _build\html directory if it doesn't exist
+	if not exist _build\html mkdir _build\html
+
+	REM Navigate to _build and add the worktree
+	cd _build
+	git worktree prune
+	git worktree add -f html gh-pages
+	cd ..
+	goto end
+)
+
 if "%1" == "" goto help
 
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%

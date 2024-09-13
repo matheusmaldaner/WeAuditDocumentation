@@ -9,8 +9,8 @@ SOURCEDIR     = .
 BUILDDIR      = _build
 
 clean:
-	@$(SPHINXBUILD) -M clean "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O);
-	cd _build; git worktree add -f html gh-pages
+	@$(SPHINXBUILD) -M clean "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	@if [ -d "$(BUILDDIR)" ]; then cd _build; git worktree prune; git worktree add -f html gh-pages; else echo "_build directory does not exist!"; fi
 
 # Put it first so that "make" without argument is like "make help".
 help:
